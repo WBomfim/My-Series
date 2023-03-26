@@ -3,9 +3,7 @@ package com.trybe.acc.java.minhasseries.controller;
 import com.trybe.acc.java.minhasseries.model.Episodio;
 import com.trybe.acc.java.minhasseries.model.Serie;
 import com.trybe.acc.java.minhasseries.service.SerieService;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,5 +56,5 @@ public class SerieController {
   public ResponseEntity<Integer> getTempoTotal() {
     return ResponseEntity.ok().body(serieService.getTempoTotal());
   }
-  
+
 }
