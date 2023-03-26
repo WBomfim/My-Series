@@ -25,13 +25,12 @@ public class Serie {
 
   @Column
   @OneToMany(mappedBy = "serie")
-  private List<Episodio> episodios;
+  private List<Episodio> episodios = new ArrayList<Episodio>();
 
   public Serie() {}
 
   public Serie(String nome) {
     this.nome = nome;
-    this.episodios = new ArrayList<Episodio>();
   }
 
   public Integer getId() {
