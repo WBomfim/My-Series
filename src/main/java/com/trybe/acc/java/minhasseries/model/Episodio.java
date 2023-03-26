@@ -1,5 +1,6 @@
 package com.trybe.acc.java.minhasseries.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +25,7 @@ public class Episodio {
   @Column
   private int duracaoEmMinutos;
 
+  @JsonIgnore
   @ManyToOne
   private Serie serie;
 

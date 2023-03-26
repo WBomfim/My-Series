@@ -2,7 +2,6 @@ package com.trybe.acc.java.minhasseries.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,6 +52,10 @@ public class Serie {
 
   public void adicionarEpisodio(Episodio episodios) {
     this.episodios.add(episodios);
+  }
+
+  public Integer getTempoTotal() {
+    return episodios.stream().mapToInt(Episodio::getDuracaoEmMinutos).sum();
   }
 
 }

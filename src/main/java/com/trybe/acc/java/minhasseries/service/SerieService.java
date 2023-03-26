@@ -4,6 +4,8 @@ import com.trybe.acc.java.minhasseries.model.Episodio;
 import com.trybe.acc.java.minhasseries.model.Serie;
 import com.trybe.acc.java.minhasseries.repository.SerieRepository;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +27,8 @@ public class SerieService {
     return serieRepository.findAll();
   }
 
-  public String deleteSerie(String serieId) {
-    serieRepository.deleteById(Integer.parseInt(serieId));
+  public String deleteSerie(Integer serieId) {
+    serieRepository.deleteById(serieId);
     return "Serie deletada com sucesso";
   }
 
@@ -34,14 +36,14 @@ public class SerieService {
    * Método que adiciona um episódio a uma série.
    * 
    */
-  public Serie addEpisode(String serieId, Episodio episodio) {
-    Serie serie = serieRepository.findById(Integer.parseInt(serieId)).get();
-    serie.getEpisodios().add(episodio);
+  public Serie addEpisode(Integer serieId, Episodio episodio) {
+    Serie serie = serieRepository.findById(serieId).get();
+    serie.adicionarEpisodio(episodio);
     return serieRepository.save(serie);
   }
 
-  public List<Episodio> getEpisodes(String serieId) {
-    Serie serie = serieRepository.findById(Integer.parseInt(serieId)).get();
+  public List<Episodio> getEpisodes(Integer serieId) {
+    Serie serie = serieRepository.findById(serieId).get();
     return serie.getEpisodios();
   }
 
@@ -49,8 +51,15 @@ public class SerieService {
    * Método que retorna o tempo total de todas as séries.
    * 
    */
-  public Integer getTempoTotal() {
-    Integer tempoTotal = 100;
+  public Map<String, Integer> getTempoTotal() {
+    List<Serie> series = serieRepository.findAll();
+
+    int duracaoTotal = 0;
+    for (Serie serie : series) {
+      duracaoTotal += serie.getTempoTotal();
+    }
+
+    Map<String, Integer> tempoTotal = Map.of("tempoEmMinutos", duracaoTotal);
     return tempoTotal;
   }
   
