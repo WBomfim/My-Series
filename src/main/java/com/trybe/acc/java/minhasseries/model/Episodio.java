@@ -5,13 +5,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
+/**
+ * Entity Episodio.
+ *
+ */
 @Entity
 public class Episodio {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  private Integer id;
 
   @Column
   private int numero;
@@ -19,12 +24,29 @@ public class Episodio {
   @Column
   private int duracaoEmMinutos;
 
+  @ManyToOne
+  private Serie serie;
+
+  public Episodio() {
+  }
+
   public Episodio(int numero, int duracaoEmMinutos) {
     this.numero = numero;
     this.duracaoEmMinutos = duracaoEmMinutos;
   }
 
-  public Long getId() {
+  /**
+   * Construtor completo.
+   * 
+   */
+  public Episodio(Integer id, int numero, int duracaoEmMinutos, Serie serie) {
+    this.id = id;
+    this.numero = numero;
+    this.duracaoEmMinutos = duracaoEmMinutos;
+    this.serie = serie;
+  }
+
+  public Integer getId() {
     return id;
   }
 
@@ -42,6 +64,14 @@ public class Episodio {
 
   public void setDuracaoEmMinutos(int duracaoEmMinutos) {
     this.duracaoEmMinutos = duracaoEmMinutos;
+  }
+
+  public Serie getSerie() {
+    return serie;
+  }
+
+  public void setSerie(Serie serie) {
+    this.serie = serie;
   }
 
 }
