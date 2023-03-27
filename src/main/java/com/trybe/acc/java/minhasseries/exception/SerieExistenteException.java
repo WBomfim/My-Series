@@ -5,8 +5,10 @@ package com.trybe.acc.java.minhasseries.exception;
  * 
  */
 public class SerieExistenteException extends RuntimeException {
+  
+  private static String message = "Série Existente";
 
-  public SerieExistenteException(String message) {
+  public SerieExistenteException() {
     super(message);
   }
   
