@@ -37,6 +37,7 @@ public class SerieService {
    */
   public Serie addEpisode(Integer serieId, Episodio episodio) {
     Serie serie = serieRepository.findById(serieId).get();
+    episodio.setSerie(serie);
     serie.adicionarEpisodio(episodio);
     return serieRepository.save(serie);
   }
