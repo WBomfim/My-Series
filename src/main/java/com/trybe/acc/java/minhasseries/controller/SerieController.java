@@ -1,11 +1,16 @@
 package com.trybe.acc.java.minhasseries.controller;
 
+import com.trybe.acc.java.minhasseries.exception.DataError;
 import com.trybe.acc.java.minhasseries.model.Episodio;
 import com.trybe.acc.java.minhasseries.model.Serie;
 import com.trybe.acc.java.minhasseries.service.SerieService;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +47,7 @@ public class SerieController {
   }
 
   @PostMapping("/{serieId}/episodios")
+  @CircuitBreaker(name = "addEpisode", fallbackMethod = "addEpisodeFallback")
   public ResponseEntity<Serie> addEpisode(
       @PathVariable Integer serieId, @RequestBody Episodio episodio
   ) {
@@ -56,6 +62,13 @@ public class SerieController {
   @GetMapping("/tempo")
   public ResponseEntity<Map<String, Integer>> getTempoTotal() {
     return ResponseEntity.ok().body(serieService.getTempoTotal());
+  }
+
+  public ResponseEntity<DataError> addEpisodeFallback(
+      @PathVariable Integer serieId, @RequestBody Episodio episodio, Throwable t
+  ) {
+    return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+        .body(new DataError("Serviço temporariamente indisponível"));
   }
 
 }
