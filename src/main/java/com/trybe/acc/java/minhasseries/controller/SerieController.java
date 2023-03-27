@@ -4,9 +4,7 @@ import com.trybe.acc.java.minhasseries.exception.DataError;
 import com.trybe.acc.java.minhasseries.model.Episodio;
 import com.trybe.acc.java.minhasseries.model.Serie;
 import com.trybe.acc.java.minhasseries.service.SerieService;
-
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +45,7 @@ public class SerieController {
   }
 
   @PostMapping("/{serieId}/episodios")
-  @CircuitBreaker(name = "addEpisode", fallbackMethod = "addEpisodeFallback")
+  //@CircuitBreaker(name = "addEpisode", fallbackMethod = "addEpisodeFallback")
   public ResponseEntity<Serie> addEpisode(
       @PathVariable Integer serieId, @RequestBody Episodio episodio
   ) {
@@ -64,9 +62,7 @@ public class SerieController {
     return ResponseEntity.ok().body(serieService.getTempoTotal());
   }
 
-  public ResponseEntity<DataError> addEpisodeFallback(
-      @PathVariable Integer serieId, @RequestBody Episodio episodio, Throwable t
-  ) {
+  public ResponseEntity<DataError> addEpisodeFallback(Exception exception) {
     return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
         .body(new DataError("Serviço temporariamente indisponível"));
   }
