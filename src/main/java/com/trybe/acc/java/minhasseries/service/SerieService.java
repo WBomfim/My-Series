@@ -1,5 +1,6 @@
 package com.trybe.acc.java.minhasseries.service;
 
+import com.trybe.acc.java.minhasseries.exception.EpisodioExistenteException;
 import com.trybe.acc.java.minhasseries.exception.SerieExistenteException;
 import com.trybe.acc.java.minhasseries.exception.SerieNaoEncontradaException;
 import com.trybe.acc.java.minhasseries.model.Episodio;
@@ -57,9 +58,18 @@ public class SerieService {
     try {
       Serie serie = serieRepository.findById(serieId).get();
 
+      boolean existEpisodio = serie.getEpisodios().stream()
+          .anyMatch(episodioExistente -> episodioExistente.getNumero() == episodio.getNumero());
+
+      if (existEpisodio) {
+        throw new EpisodioExistenteException();
+      }
+
       episodio.setSerie(serie);
       serie.adicionarEpisodio(episodio);
       return serieRepository.save(serie);
+    } catch (EpisodioExistenteException e) {
+      throw e;
     } catch (RuntimeException e) {
       throw new SerieNaoEncontradaException();
     }

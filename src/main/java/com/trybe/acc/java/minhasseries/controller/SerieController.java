@@ -45,7 +45,7 @@ public class SerieController {
   }
 
   @PostMapping("/{serieId}/episodios")
-  //@CircuitBreaker(name = "addEpisode", fallbackMethod = "addEpisodeFallback")
+  @CircuitBreaker(name = "addEpisode")
   public ResponseEntity<Serie> addEpisode(
       @PathVariable Integer serieId, @RequestBody Episodio episodio
   ) {
@@ -61,10 +61,5 @@ public class SerieController {
   public ResponseEntity<Map<String, Integer>> getTempoTotal() {
     return ResponseEntity.ok().body(serieService.getTempoTotal());
   }
-
-  public ResponseEntity<DataError> addEpisodeFallback(Exception exception) {
-    return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
-        .body(new DataError("Serviço temporariamente indisponível"));
-  }
-
+  
 }

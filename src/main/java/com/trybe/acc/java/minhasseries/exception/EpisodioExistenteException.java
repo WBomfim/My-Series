@@ -6,7 +6,7 @@ package com.trybe.acc.java.minhasseries.exception;
  */
 public class EpisodioExistenteException extends RuntimeException {
 
-  private static String message = "Episódio Existente";
+  private static final String message = "Episódio Existente";
 
   public EpisodioExistenteException() {
     super(message);

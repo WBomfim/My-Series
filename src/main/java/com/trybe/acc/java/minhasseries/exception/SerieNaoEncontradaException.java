@@ -6,7 +6,7 @@ package com.trybe.acc.java.minhasseries.exception;
  */
 public class SerieNaoEncontradaException extends RuntimeException {
 
-  private static String message = "Série não encontrada";
+  private static final String message = "Série não encontrada";
 
   public SerieNaoEncontradaException() {
     super(message);
