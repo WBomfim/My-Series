@@ -62,6 +62,10 @@ public class SerieController {
     return ResponseEntity.ok().body(serieService.getTempoTotal());
   }
 
+  /**
+   * Método de fallback para o circuit breaker.
+   * 
+   */
   public ResponseEntity<DataError> addEpisodeFallback(
       Integer serieId, Episodio episodio, Throwable t
   ) {
